@@ -1,14 +1,26 @@
-# Compiled class file
+.project
+.classpath
+*.iml
+.idea/*
+target/*
+.settings/*
+**/.settings
+**/.idea/*
+**/target/*
+*.log*
+**/.vscode/*
+.vscode/*
+*bin/*
 *.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+**/.gradle/*
+**/gradlew
+gradlew.bat
+**/bin/*
+**/build/*
+**/gradle/*
+.factorypath
+.gitignore
+.gitattributes
 
 # Package Files #
 *.jar
