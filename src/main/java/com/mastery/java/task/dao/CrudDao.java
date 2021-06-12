@@ -4,15 +4,15 @@ import com.mastery.java.task.entity.Entity;
 
 import java.util.List;
 
-public interface CrudDao<T extends Entity> extends Dao {
+public interface CrudDao<E extends Entity> extends Dao {
 
-    List<T> findAll();
+    List<E> findAll();
 
-    T findById(Long id);
+    E findById(Long id);
 
-    int save(T t);
+    int save(E entity);
 
-    void update(T t);
+    void update(E entity);
 
     boolean delete(Long id);
 }
