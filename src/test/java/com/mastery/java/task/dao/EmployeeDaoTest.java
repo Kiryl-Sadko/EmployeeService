@@ -22,7 +22,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.*;
 class EmployeeDaoTest {
 
     @Autowired
-    EmployeeDao employeeDao;
+    private EmployeeDao employeeDao;
 
     @Test
     void shouldFindAllEmployees() {
