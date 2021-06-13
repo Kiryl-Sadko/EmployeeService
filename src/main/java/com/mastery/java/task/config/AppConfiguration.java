@@ -8,14 +8,19 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
+import javax.validation.Validation;
+import javax.validation.Validator;
 
 @Configuration
+@EnableWebMvc
 @EnableTransactionManagement
 @PropertySource(value = "classpath:datasource.properties")
 @ComponentScan(basePackages = "com.mastery.java.task")
-public class AppConfiguration {
+public class AppConfiguration implements WebMvcConfigurer {
 
     private static final String DB_DRIVER = "datasource.driver";
     private static final String DB_URL = "datasource.url";
@@ -41,5 +46,10 @@ public class AppConfiguration {
     @Bean
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
+    }
+
+    @Bean
+    public Validator validator() {
+        return Validation.buildDefaultValidatorFactory().getValidator();
     }
 }

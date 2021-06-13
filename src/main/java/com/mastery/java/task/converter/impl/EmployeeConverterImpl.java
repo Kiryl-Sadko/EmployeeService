@@ -2,7 +2,6 @@ package com.mastery.java.task.converter.impl;
 
 import com.mastery.java.task.converter.EmployeeConverter;
 import com.mastery.java.task.dto.EmployeeDto;
-import com.mastery.java.task.dto.Gender;
 import com.mastery.java.task.entity.Employee;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +15,7 @@ public class EmployeeConverterImpl implements EmployeeConverter {
         dto.setFirstName(employee.getFirstName());
         dto.setLastName(employee.getLastName());
         dto.setJobTitle(employee.getJobTitle());
-        dto.setGender(Gender.fromString(employee.getGender()));
+        dto.setGender(employee.getGender());
         dto.setDepartmentId(employee.getDepartmentId());
         dto.setDateOfBirth(employee.getDateOfBirth());
         return dto;
@@ -29,7 +28,7 @@ public class EmployeeConverterImpl implements EmployeeConverter {
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setJobTitle(dto.getJobTitle());
-        entity.setGender(dto.getGender().name());
+        entity.setGender(dto.getGender());
         entity.setDepartmentId(dto.getDepartmentId());
         entity.setDateOfBirth(dto.getDateOfBirth());
         return entity;

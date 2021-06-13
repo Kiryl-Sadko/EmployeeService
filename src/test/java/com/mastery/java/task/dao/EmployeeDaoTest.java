@@ -2,7 +2,6 @@ package com.mastery.java.task.dao;
 
 import com.mastery.java.task.config.AppConfiguration;
 import com.mastery.java.task.entity.Employee;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +11,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.*;
 
 @SpringBootTest(classes = AppConfiguration.class)
@@ -27,13 +27,13 @@ class EmployeeDaoTest {
     @Test
     void shouldFindAllEmployees() {
         List<Employee> all = employeeDao.findAll();
-        Assertions.assertEquals(3, all.size());
+        assertEquals(3, all.size());
     }
 
     @Test
     void shouldFindEmployeeById() {
         Employee employeeFromDb = employeeDao.findById(1L);
-        Assertions.assertEquals("Test_1", employeeFromDb.getFirstName());
+        assertEquals("Test_1", employeeFromDb.getFirstName());
     }
 
     @Test
@@ -42,7 +42,7 @@ class EmployeeDaoTest {
         Employee employee = createNewEmployee();
         employeeDao.save(employee);
         int sizeAfterCreation = employeeDao.findAll().size();
-        Assertions.assertEquals(++sizeBeforeCreation, sizeAfterCreation);
+        assertEquals(++sizeBeforeCreation, sizeAfterCreation);
     }
 
     @Test
@@ -50,7 +50,7 @@ class EmployeeDaoTest {
         int sizeBeforeCreation = employeeDao.findAll().size();
         employeeDao.delete(1L);
         int sizeAfterCreation = employeeDao.findAll().size();
-        Assertions.assertEquals(--sizeBeforeCreation, sizeAfterCreation);
+        assertEquals(--sizeBeforeCreation, sizeAfterCreation);
     }
 
     @Test
@@ -59,7 +59,7 @@ class EmployeeDaoTest {
         Employee employee = createNewEmployee();
         employeeDao.update(employee);
         String firstNameAfterUpdating = employeeDao.findById(1L).getFirstName();
-        Assertions.assertNotEquals(firstNameBeforeUpdating, firstNameAfterUpdating);
+        assertNotEquals(firstNameBeforeUpdating, firstNameAfterUpdating);
     }
 
     private Employee createNewEmployee() {

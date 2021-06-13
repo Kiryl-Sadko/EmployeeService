@@ -10,7 +10,7 @@ public interface CrudService<D extends Dto> extends Service {
 
     D findById(Long id);
 
-    int save(D dto);
+    Long save(D dto);
 
     D update(D dto);
 
