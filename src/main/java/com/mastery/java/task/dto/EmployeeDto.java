@@ -1,16 +1,25 @@
 package com.mastery.java.task.dto;
 
+import com.mastery.java.task.validator.ValueOfEnum;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class EmployeeDto implements Dto {
 
     private Long id;
+    @Size(min = 4, max = 100)
     private String firstName;
+    @Size(max = 100)
     private String lastName;
     private Long departmentId;
+    @NotNull
     private String jobTitle;
-    private Gender gender;
+
+    @ValueOfEnum(enumClass = Gender.class, message = "Gender value must be any of 'male' or 'female'")
+    private String gender;
     private LocalDate dateOfBirth;
 
     public EmployeeDto() {
@@ -81,11 +90,11 @@ public class EmployeeDto implements Dto {
         this.jobTitle = jobTitle;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
