@@ -3,7 +3,6 @@ package com.mastery.java.task.service;
 import com.mastery.java.task.config.AppConfiguration;
 import com.mastery.java.task.dto.EmployeeDto;
 import com.mastery.java.task.dto.Gender;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +12,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.*;
 
 @SpringBootTest(classes = AppConfiguration.class)
@@ -28,13 +28,13 @@ class EmployeeServiceTest {
     @Test
     void shouldFindAllEmployees() {
         List<EmployeeDto> all = service.findAll();
-        Assertions.assertEquals(3, all.size());
+        assertEquals(3, all.size());
     }
 
     @Test
     void shouldFindEmployeeById() {
         EmployeeDto employeeDto = service.findById(1L);
-        Assertions.assertEquals("Test_1", employeeDto.getFirstName());
+        assertEquals("Test_1", employeeDto.getFirstName());
     }
 
     @Test
@@ -43,7 +43,7 @@ class EmployeeServiceTest {
         EmployeeDto employeeDto = createNewEmployeeDto();
         service.save(employeeDto);
         int sizeAfterCreation = service.findAll().size();
-        Assertions.assertEquals(++sizeBeforeCreation, sizeAfterCreation);
+        assertEquals(++sizeBeforeCreation, sizeAfterCreation);
     }
 
     @Test
@@ -51,7 +51,7 @@ class EmployeeServiceTest {
         int sizeBeforeCreation = service.findAll().size();
         service.delete(1L);
         int sizeAfterCreation = service.findAll().size();
-        Assertions.assertEquals(--sizeBeforeCreation, sizeAfterCreation);
+        assertEquals(--sizeBeforeCreation, sizeAfterCreation);
     }
 
     @Test
@@ -60,7 +60,7 @@ class EmployeeServiceTest {
         EmployeeDto employeeDto = createNewEmployeeDto();
         EmployeeDto updatedDto = service.update(employeeDto);
         String firstNameAfterUpdating = updatedDto.getFirstName();
-        Assertions.assertNotEquals(firstNameBeforeUpdating, firstNameAfterUpdating);
+        assertNotEquals(firstNameBeforeUpdating, firstNameAfterUpdating);
     }
 
     private EmployeeDto createNewEmployeeDto() {
@@ -70,7 +70,7 @@ class EmployeeServiceTest {
         dto.setLastName("lastname");
         dto.setDepartmentId(1L);
         dto.setJobTitle("Developer");
-        dto.setGender(Gender.MALE);
+        dto.setGender(Gender.MALE.name());
         dto.setDateOfBirth(LocalDate.now());
         return dto;
     }
