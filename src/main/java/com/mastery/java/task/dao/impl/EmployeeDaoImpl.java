@@ -2,6 +2,8 @@ package com.mastery.java.task.dao.impl;
 
 import com.mastery.java.task.dao.EmployeeDao;
 import com.mastery.java.task.entity.Employee;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -10,10 +12,15 @@ import org.springframework.stereotype.Repository;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.text.MessageFormat;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Repository
 public class EmployeeDaoImpl implements EmployeeDao {
+
+    private static final Logger LOGGER = LogManager.getLogger(EmployeeDaoImpl.class);
 
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Employee> rowMapper;
@@ -41,14 +48,20 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public Employee findById(Long id) {
-        String query = "SELECT * FROM employee WHERE id=?";
-        return jdbcTemplate.queryForObject(query, rowMapper, id);
+        String query = MessageFormat.format("SELECT * FROM employee WHERE id={0}", id);
+        try {
+            return jdbcTemplate.queryForObject(query, rowMapper);
+        } catch (Exception exception) {
+            LOGGER.error("Such entity not found id={}", id);
+            throw new NoSuchElementException();
+        }
     }
 
     @Override
-    public int save(Employee employee) {
+    public Long save(Employee employee) {
         String query = "INSERT INTO employee (first_name, last_name, department_id, job_title, gender, date_of_birth) VALUES(?, ?, ?, ?, ?, ?);";
-        return jdbcTemplate.update(connection ->
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection ->
                 {
                     PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                     ps.setString(1, employee.getFirstName());
@@ -59,7 +72,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
                     ps.setDate(6, Date.valueOf(employee.getDateOfBirth()));
                     return ps;
                 },
-                new GeneratedKeyHolder());
+                keyHolder);
+        Long generatedId = (Long) Objects.requireNonNull(keyHolder.getKeys(), "Generated key hasn't found").get("id");
+        employee.setId(generatedId);
+        LOGGER.info("Employee has created in database, generated id='{}'", generatedId);
+        return generatedId;
     }
 
     @Override
@@ -76,10 +93,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public boolean delete(Long id) {
+    public void delete(Long id) {
         String query = "DELETE FROM employee WHERE id=?";
-        int flagOfDeletion = jdbcTemplate.update(query, id);
-        return flagOfDeletion > 0;
+        int isDeleted = jdbcTemplate.update(query, id);
+        if (isDeleted == 0) {
+            String message = MessageFormat.format("Employee with id={0} not found", id);
+            LOGGER.error(message);
+            throw new NoSuchElementException(message);
+        }
     }
 
     @Override

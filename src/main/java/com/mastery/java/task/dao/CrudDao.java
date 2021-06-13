@@ -10,9 +10,9 @@ public interface CrudDao<E extends Entity> extends Dao {
 
     E findById(Long id);
 
-    int save(E entity);
+    Long save(E entity);
 
     void update(E entity);
 
-    boolean delete(Long id);
+    void delete(Long id);
 }
