@@ -1,10 +1,16 @@
 ### Practical task
 
-Using the provided skeleton, implement the REST service.
+Used technologies:
+- java
+- PstgreSQL
+- Spring Boot
+- Spring JDBC
+- Spring MVC
+- JUnit
+- Log4J
+- H2 embedded database (testing)
 
-Useful link: https://spring.io/guides/gs/rest-service/
-
-In addition you could use Swagger to provide API documentation.
+Postman used to testing http requests.
         
         
   
