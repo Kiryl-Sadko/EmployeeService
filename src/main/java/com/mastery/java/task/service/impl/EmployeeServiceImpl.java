@@ -51,6 +51,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<EmployeeDto> findByDepartmentId(Long id) {
+        List<Employee> employeesByDepartment = employeeDao.findByDepartmentId(id);
+        return employeesByDepartment.stream()
+                .map(converter::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Long save(EmployeeDto dto) {
         validate(dto);
 

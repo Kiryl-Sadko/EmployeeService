@@ -4,7 +4,7 @@ import com.mastery.java.task.entity.Entity;
 
 import java.util.List;
 
-public interface CrudDao<E extends Entity> extends Dao {
+public interface CRUDDao<E extends Entity> {
 
     List<E> findAll();
 

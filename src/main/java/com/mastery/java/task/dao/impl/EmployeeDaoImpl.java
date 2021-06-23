@@ -26,7 +26,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
     private final RowMapper<Employee> rowMapper;
 
     public EmployeeDaoImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
         this.rowMapper = (resultSet, i) -> {
             Employee employee = new Employee();
             employee.setId(resultSet.getLong("id"));
@@ -38,6 +37,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             employee.setDateOfBirth(resultSet.getDate("date_of_birth").toLocalDate());
             return employee;
         };
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override

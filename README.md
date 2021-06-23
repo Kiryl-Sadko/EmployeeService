@@ -1,6 +1,7 @@
 ### Practical task
 
 Used technologies:
+
 - java
 - PstgreSQL
 - Spring Boot

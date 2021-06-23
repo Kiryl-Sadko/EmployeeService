@@ -4,7 +4,7 @@ import com.mastery.java.task.dto.Dto;
 
 import java.util.List;
 
-public interface CrudService<D extends Dto> extends Service {
+public interface CRUDService<D extends Dto> {
 
     List<D> findAll();
 

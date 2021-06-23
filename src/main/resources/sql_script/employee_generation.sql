@@ -1,9 +1,10 @@
 do
 $$
     DECLARE
-        i integer := 0;
-    begin
-        WHILE i < 5
+i integer := 0;
+begin
+        WHILE
+i < 5
             loop
                 INSERT INTO public.employee(first_name,
                                             last_name,
@@ -17,7 +18,8 @@ $$
                         concat('developer_', i),
                         'female',
                         '1995-08-03');
-                i := i + 1;
-            END loop;
-    end
+                i
+:= i + 1;
+END loop;
+end
 $$;

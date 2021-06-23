@@ -5,7 +5,7 @@ import com.mastery.java.task.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -16,7 +16,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = AppConfiguration.class)
+@SpringBootTest(classes = AppConfiguration.class)
 @SqlGroup({
         @Sql(executionPhase = BEFORE_TEST_METHOD, scripts = {"classpath:init.sql", "classpath:filling.sql"}),
         @Sql(executionPhase = AFTER_TEST_METHOD, scripts = "classpath:drop.sql")

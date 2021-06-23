@@ -1,6 +1,9 @@
 package com.mastery.java.task.converter;
 
-public interface Converter<D, E> {
+import com.mastery.java.task.dto.Dto;
+import com.mastery.java.task.entity.Entity;
+
+public interface Converter<D extends Dto, E extends Entity> {
 
     D convertToDto(E entity);
 
